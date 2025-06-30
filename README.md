@@ -34,6 +34,24 @@ Use port forwarding to access the ArgoCD web interface:
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ```
 
+### 4. Login to ArgoCD UI
+
+Go to `localhost:8080`.
+
+The default password is injected as a secret (which should be deleted after a new password has been set), which can be accessed by doing:
+
+```bash
+kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
+```
+
+Copy the base64 encoded password value and do:
+
+```bash
+echo <copied-password> | base64 --decode
+```
+
+Copy the value without the trailing `%` and use it as the password.
+
 The ArgoCD UI will be available at: https://localhost:8080
 
 ## Repository Structure
