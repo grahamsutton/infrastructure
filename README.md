@@ -6,6 +6,7 @@ This repository contains the GitOps configuration for managing Kubernetes infras
 
 - Access to a Kubernetes cluster
 - `kubectl` configured to communicate with your cluster
+- For local development: `minikube` installed and running
 
 ## Initial Cluster Setup
 
@@ -58,5 +59,39 @@ The ArgoCD UI will be available at: https://localhost:8080
 
 - `app-of-apps.yaml` - Root ArgoCD application that manages all other applications
 - `apps/` - Individual application configurations managed by ArgoCD
+
+## Local Development Access
+
+When developing locally with minikube, services are not directly accessible via NodePort on macOS with the Docker driver. Use the following approach to access services:
+
+### Accessing Services via Ingress (Recommended)
+
+1. **Enable minikube tunnel** (run in a separate terminal and keep running):
+   ```bash
+   minikube tunnel
+   ```
+
+2. **Update your hosts file** (`/etc/hosts`) to point services to localhost:
+   ```bash
+   echo "127.0.0.1 argocd.operion.local" | sudo tee -a /etc/hosts
+   ```
+
+3. **Access services directly**:
+   - ArgoCD UI: `http://argocd.operion.local`
+   - Other services: `http://<service-name>.operion.local`
+
+### Alternative: Port Forwarding
+
+If you prefer not to use minikube tunnel, you can use port forwarding:
+
+```bash
+# ArgoCD UI
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+# Ingress Controller (for debugging)
+kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80
+```
+
+**Note**: With minikube tunnel, you get the full ingress experience and can access multiple services using their configured hostnames.
 
 For detailed ArgoCD documentation, visit: https://argo-cd.readthedocs.io/en/stable/
