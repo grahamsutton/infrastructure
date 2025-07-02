@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/grahamsutton/infrastructure.git
-    path: manifests/resources
+    path: resources
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
