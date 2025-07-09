@@ -5,11 +5,10 @@ metadata:
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
-  dependencies:
-    - name: external-secrets
-    - name: resources
   source:
     repoURL: https://github.com/grahamsutton/sentinel-api
     path: k8s
