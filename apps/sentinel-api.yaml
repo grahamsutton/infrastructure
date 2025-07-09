@@ -7,8 +7,11 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+  dependencies:
+    - name: external-secrets
+    - name: resources
   source:
-    repoURL: https://github.com/grahamsutton/sentinel-api
+    repoURL: https://github.com/grahamsutton/sentinel-api.git
     path: k8s
     targetRevision: 'master'
     helm:
