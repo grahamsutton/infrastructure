@@ -10,7 +10,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/grahamsutton/sentinel-api
+    repoURL: https://github.com/grahamsutton/sentinel-api.git
     path: k8s
     targetRevision: 'master'
     helm:
